@@ -1,1 +1,1 @@
-"# GuildMC" 
+# GuildMC
