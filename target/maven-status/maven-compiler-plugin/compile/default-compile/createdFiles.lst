@@ -1,0 +1,10 @@
+fr\antdevplus\objects\Guild.class
+fr\antdevplus\Main.class
+fr\antdevplus\json\SerializationManager.class
+fr\antdevplus\GuildMCListener.class
+fr\antdevplus\utils\FileUtils.class
+fr\antdevplus\objects\GuildRole.class
+fr\antdevplus\utils\GuildMCFunctions.class
+fr\antdevplus\Guildmc.class
+fr\antdevplus\objects\GuildPlayer.class
+fr\antdevplus\gui\MasterGUI.class

@@ -1,0 +1,9 @@
+name: GuildMC
+version: 1.0
+main: fr.antdevplus.Main
+author: AntDevPlus
+api-version: 1.13
+commands:
+  guildmc:
+    description: GuildMC main command.
+    aliases: [gmc]

@@ -1,0 +1,119 @@
+package fr.antdevplus.utils;
+
+import fr.antdevplus.Main;
+import fr.antdevplus.json.SerializationManager;
+import fr.antdevplus.objects.Guild;
+import fr.antdevplus.objects.GuildPlayer;
+import fr.antdevplus.objects.GuildRole;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.io.File;
+import java.util.*;
+
+public class GuildMCFunctions {
+
+    public static Set<Guild> GUILDLIST = new HashSet<Guild>();
+    public static Set<GuildPlayer> GUILDPLAYERLIST = new HashSet<GuildPlayer>();
+    static Main main;
+    public GuildMCFunctions() {
+    }
+
+    public static ArrayList<String> CREATOR_LIST = new ArrayList<String>();
+
+    public void giveGuildWand(Player gamemaster){
+        String WAND_NAME = "§6§l[§a§lGuildMC§6§l] §r§eMaster Wand";
+
+        ItemStack wand = new ItemStack(Material.STICK, 1);
+        ItemMeta wandMeta = wand.getItemMeta();
+        wandMeta.setDisplayName(WAND_NAME);
+        wandMeta.setLore(Collections.singletonList("This is a admin tool."));
+        wandMeta.addEnchant(Enchantment.SILK_TOUCH,1,true);
+        wand.setItemMeta(wandMeta);
+        gamemaster.getInventory().addItem(wand);
+    }
+    public void spawnGuildNPC(Player gamemaster){
+        Villager guildnpc = (Villager) gamemaster.getWorld().spawnEntity(gamemaster.getLocation(), EntityType.VILLAGER);
+        guildnpc.setCanPickupItems(false);
+        guildnpc.setAI(false);
+        guildnpc.setInvulnerable(true);
+        guildnpc.setCustomName("§6§l[§a§lGuildMC§6§l] §r§eMaster of Guild");
+        guildnpc.setCustomNameVisible(true);
+        guildnpc.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200000, 255));
+    }
+    public void displayCreatorInformations(Player player){
+        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eMaster of Guild", ChatColor.BLUE + "use /guildmc create [name]"};
+        for(String i : messages){
+            player.sendMessage(i);
+        }
+    }
+    public void addPlayerToCreatorList(Player player){
+        if(CREATOR_LIST.contains(player.getName())){
+            player.sendMessage("§4You are already a guild creator");
+        } else {
+            this.displayCreatorInformations(player);
+            CREATOR_LIST.add(player.getName());
+        }
+    }
+    public void createGuild(String guildName, Player creator){
+
+        final File guildfile = new File(main.saveGuildDir, guildName +".json");
+        final File guildplayerfile = new File(main.savePlayerDir, creator.getName() +".json");
+        final SerializationManager serializationManager = new SerializationManager();
+
+        final Set<String> members = new HashSet<String>();
+        members.add(creator.getName());
+        final Guild newguild = new Guild(guildName, "",1,00.0f, members,null);
+        final GuildPlayer gcreator = new GuildPlayer(creator.getName(), GuildRole.CREATOR, true, newguild.getName());
+
+        String guildjson = serializationManager.serializeGuild(newguild);
+        FileUtils.save(guildfile, guildjson);
+
+        String guildplayerjson = serializationManager.serializeGuildProfile(gcreator);
+        FileUtils.save(guildplayerfile, guildplayerjson);
+    }
+    public static void listAllGuild(){
+        SerializationManager serializationManager = new SerializationManager();
+        FileUtils guildFileSystem = new FileUtils();
+        File guilddir = new File(main.saveGuildDir,"");
+        File[] files= guilddir.listFiles();
+        for(File i : files){
+                Guild guild = serializationManager.deserializeGuild(guildFileSystem.loadContent(i));
+                GUILDLIST.add(guild);
+        }
+    }
+    public static void listAllPlayerGuild(){
+        SerializationManager serializationManager = new SerializationManager();
+        FileUtils guildFileSystem = new FileUtils();
+        File guilddir = new File(main.savePlayerDir,"");
+        File[] files= guilddir.listFiles();
+        for(File i : files){
+            GuildPlayer guildPlayer = serializationManager.deserializeProfile(guildFileSystem.loadContent(i));
+            GUILDPLAYERLIST.add(guildPlayer);
+        }
+    }
+    public void displayGuildInfo(Player player){
+        Iterator<GuildPlayer> guildPlayerIterator = GUILDPLAYERLIST.iterator();
+
+        while (guildPlayerIterator.hasNext()) {
+            GuildPlayer guildPlayer = guildPlayerIterator.next();
+            String filename = guildPlayer.getName();
+            //System.out.println(filename + player.getName());
+
+            if(filename.equals(player.getName())){
+                String[] messages = {ChatColor.BOLD + "§b -= Hello ! =- you are on the guild : " + guildPlayer.getGuild(), ChatColor.BLUE + "Your Role: " + guildPlayer.getRole()};
+                for(String i : messages){
+                    player.sendMessage(i);
+                }
+            }
+        }
+    }
+}

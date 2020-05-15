@@ -1,0 +1,8 @@
+database:
+  #in localhost default is : 127.0.0.1
+  address: 127.0.0.1
+  #like root user
+  name: root
+  password: root
+  #you must use the guildmc.sql find in the repositories
+  database: minecraft
