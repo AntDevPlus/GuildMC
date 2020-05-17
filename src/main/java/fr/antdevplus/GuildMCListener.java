@@ -52,7 +52,6 @@ public class GuildMCListener implements Listener {
                 functions.addPlayerToCreatorList(player);
                 functions.createGuild("test",player);
             }
-
             e.setCancelled(true);
         }
     }
@@ -60,6 +59,15 @@ public class GuildMCListener implements Listener {
     public void onPlayerConnect(PlayerJoinEvent e){
         Player p = e.getPlayer();
         GuildMCFunctions functions = new GuildMCFunctions();
-        functions.displayGuildInfo(p);
+        if (p.hasPlayedBefore()){
+            functions.displayGuildInfo(p);
+        } else {
+            GuildPlayer newgplayer = new GuildPlayer(p.getName(),GuildRole.NONGUILDED,false, "default");
+            SerializationManager serializationManager = new SerializationManager();
+            String json = serializationManager.serializeGuildProfile(newgplayer);
+            File file = new File(Main.savePlayerDir, p.getName()+".json");
+            FileUtils.save(file,json);
+        }
+
     }
 }

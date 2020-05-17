@@ -24,6 +24,10 @@ public class GuildMCFunctions {
     public static Set<Guild> GUILDLIST = new HashSet<Guild>();
     public static Set<GuildPlayer> GUILDPLAYERLIST = new HashSet<GuildPlayer>();
     static Main main;
+
+    SerializationManager serializationManager = new SerializationManager();
+    FileUtils fileUtils = new FileUtils();
+
     public GuildMCFunctions() {
     }
 
@@ -101,19 +105,10 @@ public class GuildMCFunctions {
         }
     }
     public void displayGuildInfo(Player player){
-        Iterator<GuildPlayer> guildPlayerIterator = GUILDPLAYERLIST.iterator();
+        String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
+        GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
 
-        while (guildPlayerIterator.hasNext()) {
-            GuildPlayer guildPlayer = guildPlayerIterator.next();
-            String filename = guildPlayer.getName();
-            //System.out.println(filename + player.getName());
+            player.sendMessage(guildPlayer.getRole().toString());
 
-            if(filename.equals(player.getName())){
-                String[] messages = {ChatColor.BOLD + "§b -= Hello ! =- you are on the guild : " + guildPlayer.getGuild(), ChatColor.BLUE + "Your Role: " + guildPlayer.getRole()};
-                for(String i : messages){
-                    player.sendMessage(i);
-                }
-            }
         }
-    }
 }

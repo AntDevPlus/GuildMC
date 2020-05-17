@@ -1,13 +1,17 @@
 package fr.antdevplus.objects;
 
-import fr.antdevplus.utils.GuildMCFunctions;
-import org.bukkit.ChatColor;
+import fr.antdevplus.Main;
+import fr.antdevplus.json.SerializationManager;
+import fr.antdevplus.utils.FileUtils;
 import org.bukkit.entity.Player;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.io.File;
 
 public class GuildPlayer {
+
+        static Main main;
+        static FileUtils fileUtils = new FileUtils();
+        static SerializationManager serializationManager = new SerializationManager();
 
         private String name;
         private GuildRole role;
@@ -51,5 +55,11 @@ public class GuildPlayer {
 
     public void setCreator(Boolean creator) {
         isCreator = creator;
+    }
+
+    public static GuildPlayer getGuildPlayer(Player player){
+        String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
+        GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
+        return guildPlayer;
     }
 }

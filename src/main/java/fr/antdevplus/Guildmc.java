@@ -1,5 +1,8 @@
 package fr.antdevplus;
 
+import fr.antdevplus.objects.GuildPlayer;
+import fr.antdevplus.objects.GuildRole;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,6 +24,13 @@ public class Guildmc implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("create") && args[1] != null) {
                     functions.createGuild(args[1], sender);
+            } else if (args[0].equalsIgnoreCase("invite") && args[1] != null) {
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                GuildRole grole = gsender.getRole();
+                Player invitePlayer = Bukkit.getPlayer(args[1]);
+                if (grole == GuildRole.MODERATOR || grole == GuildRole.CREATOR || grole == GuildRole.ADMINISTRATOR){
+                    invitePlayer.sendMessage("GG !");
+                }
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
