@@ -70,8 +70,8 @@ public class GuildMCFunctions {
         final File guildfile = new File(main.saveGuildDir, guildName +".json");
         final File guildplayerfile = new File(main.savePlayerDir, creator.getName() +".json");
         final SerializationManager serializationManager = new SerializationManager();
-
         final Set<String> members = new HashSet<String>();
+
         members.add(creator.getName());
         final Guild newguild = new Guild(guildName, "",1,00.0f, members,null);
         final GuildPlayer gcreator = new GuildPlayer(creator.getName(), GuildRole.CREATOR, true, newguild.getName());
