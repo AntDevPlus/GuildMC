@@ -9,5 +9,5 @@ It's an open-source Minecraft guild plugin !
 - Already on work in progress
 
 ## Commands
- -> /guildmc wand
- -> /guildmc spawn npc
+ - /guildmc wand
+ - /guildmc spawn npc
