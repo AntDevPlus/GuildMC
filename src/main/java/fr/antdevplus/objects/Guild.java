@@ -1,11 +1,19 @@
 package fr.antdevplus.objects;
 
+import fr.antdevplus.Main;
+import fr.antdevplus.json.SerializationManager;
+import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
 import java.util.Set;
 
 public class Guild {
+
+    static Main main;
+    static FileUtils fileUtils = new FileUtils();
+    static SerializationManager serializationManager = new SerializationManager();
 
     private String name;
     private String description;
@@ -71,7 +79,7 @@ public class Guild {
 
     public void addPlayer(GuildPlayer guildPlayer){
         Set<String> players = this.getPlayers();
-        players.add("test");
+        players.add(guildPlayer.getName());
         this.setPlayers(players);
     }
 
@@ -89,11 +97,13 @@ public class Guild {
         this.setGuildchest(inventoryguild);
     }
     public static Guild getGuildByName(String guildname){
-        Guild[] guilds = (Guild[]) GuildMCFunctions.GUILDLIST.toArray();
-        for(Guild i : guilds){
-            if(i.getName().equalsIgnoreCase(guildname)){
-                System.out.println();
-            }
-        }
-    return null;}
+        String json = fileUtils.loadContent(new File(main.saveGuildDir, guildname + ".json"));
+        Guild guild = serializationManager.deserializeGuild(json);
+        return guild;
+    }
+    public static void flush(Guild guild){
+        final File guildfile = new File(main.saveGuildDir, guild.getName() +".json");
+        String json = serializationManager.serializeGuild(guild);
+        fileUtils.save(guildfile, json);
+    }
 }

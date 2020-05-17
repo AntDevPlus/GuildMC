@@ -23,6 +23,7 @@ public class GuildMCFunctions {
 
     public static Set<Guild> GUILDLIST = new HashSet<Guild>();
     public static Set<GuildPlayer> GUILDPLAYERLIST = new HashSet<GuildPlayer>();
+    public static HashMap<Player, Guild> REQUEST = new HashMap<Player, Guild>();
     static Main main;
     public static ArrayList<String> CREATOR_LIST = new ArrayList<String>();
     SerializationManager serializationManager = new SerializationManager();
@@ -107,4 +108,7 @@ public class GuildMCFunctions {
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
             player.sendMessage(guildPlayer.getRole().toString());
         }
+    public void invitePlayer(GuildPlayer guildPlayer, Guild guild){
+
+    }
 }

@@ -62,4 +62,10 @@ public class GuildPlayer {
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
         return guildPlayer;
     }
+
+    public static void flush(GuildPlayer guildPlayer){
+        final File guildfile = new File(Main.savePlayerDir, guildPlayer.getName() +".json");
+        String json = serializationManager.serializeGuildProfile(guildPlayer);
+        FileUtils.save(guildfile, json);
+    }
 }

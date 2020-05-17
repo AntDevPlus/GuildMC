@@ -1,8 +1,10 @@
 package fr.antdevplus;
 
+import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,8 +31,46 @@ public class Guildmc implements CommandExecutor {
                 GuildRole grole = gsender.getRole();
                 Player invitePlayer = Bukkit.getPlayer(args[1]);
                 if (grole == GuildRole.MODERATOR || grole == GuildRole.CREATOR || grole == GuildRole.ADMINISTRATOR){
-                    invitePlayer.sendMessage("GG !");
+
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.BLUE + "You have been invited to a new guild"};
+                    for(String i : messages){
+                        sender.sendMessage(i);
+                    }
+
+                    functions.REQUEST.put(invitePlayer, Guild.getGuildByName(gsender.getGuild()));
+                    /*Guild guild = Guild.getGuildByName(gsender.getGuild());
+                    guild.addPlayer(GuildPlayer.getGuildPlayer(invitePlayer));
+                    Guild.flush(guild);*/
+                } else {
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You don't have the permission to do that !"};
+                    for(String i : messages){
+                        sender.sendMessage(i);
+                    }
                 }
+            } else if(args[0].equalsIgnoreCase("accept")){
+                    //sender.sendMessage(functions.REQUEST.toString());//
+                    if(functions.REQUEST.containsKey(sender)){
+
+                        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.BLUE + "Welcome in your new guild !"};
+                        for(String i : messages){
+                            sender.sendMessage(i);
+                        }
+
+                        Guild guild = GuildMCFunctions.REQUEST.get(sender);
+                        GuildMCFunctions.REQUEST.remove(sender);
+                        GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                        guild.addPlayer(gsender);
+                        Guild.flush(guild);
+                        gsender.setGuild(guild.getName());
+                        gsender.setRole(GuildRole.RECRUIT);
+                        GuildPlayer.flush(gsender);
+
+                    } else {
+                        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "I don't have request for you !"};
+                        for(String i : messages){
+                            sender.sendMessage(i);
+                        }
+                    }
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
