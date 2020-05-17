@@ -19,5 +19,5 @@ It's an open-source Minecraft guild plugin !
 ## File System 💾
 This plugin create two directories in your *plugins/*
 it creates: 
-- ./GuildMC/guilds/*.json :tw-23e9: all JSON files concerning guilds
-- ./GuildMC/guildPlayers/*.json  :tw-23e9:  all JSON files concercings players
+- ./GuildMC/guilds/*.json ➡️ all JSON files concerning guilds
+- ./GuildMC/guildPlayers/*.json  ➡️  all JSON files concercings players
