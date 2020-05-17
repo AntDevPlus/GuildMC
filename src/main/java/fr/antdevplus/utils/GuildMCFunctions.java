@@ -107,8 +107,6 @@ public class GuildMCFunctions {
     public void displayGuildInfo(Player player){
         String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
-
             player.sendMessage(guildPlayer.getRole().toString());
-
         }
 }
