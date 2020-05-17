@@ -3,20 +3,20 @@
 ![](https://img.shields.io/badge/Minecraft-1.15.1-green)
 # GuildMC
 It's an open-source Minecraft guild plugin !
-### Features :tw-1f527:
+### Features 🔧
 
 - World only with JSON !
 - You can create fork
 - I'm solo on this project so the update it's so long
 - Already on work in progress
 
-## Commands :tw-270f:
+## Commands 💻
  - /guildmc wand 
  - /guildmc spawn npc
  - /guildmc invite [player]
  - /guildmc accept
 
-## File System :fa-file-code-o:
+## File System 💾
 This plugin create two directories in your *plugins/*
 it creates: 
 - ./GuildMC/guilds/*.json :tw-23e9: all JSON files concerning guilds
