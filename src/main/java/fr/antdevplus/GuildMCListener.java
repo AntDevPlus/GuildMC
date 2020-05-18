@@ -50,7 +50,6 @@ public class GuildMCListener implements Listener {
             if(e.getCurrentItem().getType() == Material.NETHER_STAR){
                 GuildMCFunctions functions = new GuildMCFunctions();
                 functions.addPlayerToCreatorList(player);
-                functions.createGuild("test",player);
             }
             e.setCancelled(true);
         }

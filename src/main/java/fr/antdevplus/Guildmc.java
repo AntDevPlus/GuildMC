@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
 
+import java.util.List;
+import java.util.Set;
+
 public class Guildmc implements CommandExecutor {
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -25,7 +28,17 @@ public class Guildmc implements CommandExecutor {
                     functions.spawnGuildNPC(sender);
                 }
             } else if (args[0].equalsIgnoreCase("create") && args[1] != null) {
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                GuildRole grole = gsender.getRole();
+
+                if(grole == GuildRole.NONGUILDED && gsender.getCreator()) {
                     functions.createGuild(args[1], sender);
+                } else {
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You must leave your guild before"};
+                    for(String i : messages){
+                        sender.sendMessage(i);
+                    }
+                }
             } else if (args[0].equalsIgnoreCase("invite") && args[1] != null) {
                 GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
                 GuildRole grole = gsender.getRole();
@@ -71,6 +84,33 @@ public class Guildmc implements CommandExecutor {
                             sender.sendMessage(i);
                         }
                     }
+            } else if(args[0].equalsIgnoreCase("leave")){
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                Guild guild = Guild.getGuildByName(gsender.getGuild());
+
+                Set<String> players = guild.getPlayers();
+                if(players.contains(sender.getName()) && gsender.getGuild() != "default"){
+
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You have leave this guild"};
+                    for(String i : messages){
+                        sender.sendMessage(i);
+                    }
+
+                    gsender.setRole(GuildRole.NONGUILDED);
+                    gsender.setGuild("Default");
+                    players.remove(sender.getName());
+                    guild.setPlayers(players);
+
+                    Guild.flush(guild);
+                    GuildPlayer.flush(gsender);
+
+                } else {
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You don't have guild"};
+                    for(String i : messages){
+                        sender.sendMessage(i);
+                    }
+                }
+
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");

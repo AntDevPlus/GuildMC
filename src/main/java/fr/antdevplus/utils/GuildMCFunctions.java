@@ -59,11 +59,22 @@ public class GuildMCFunctions {
         }
     }
     public void addPlayerToCreatorList(Player player){
-        if(CREATOR_LIST.contains(player.getName())){
-            player.sendMessage("§4You are already a guild creator");
+
+        GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
+
+        if(gplayer.getCreator()){
+            String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.DARK_GREEN + "You have already the orignal guild power"};
+            for(String i : messages){
+                player.sendMessage(i);
+            }
         } else {
-            this.displayCreatorInformations(player);
-            CREATOR_LIST.add(player.getName());
+            String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.DARK_GREEN + "You can create guild now !"};
+            for(String i : messages){
+                player.sendMessage(i);
+                gplayer.setCreator(true);
+                GuildPlayer.flush(gplayer);
+            }
+
         }
     }
     public void createGuild(String guildName, Player creator){
@@ -82,6 +93,12 @@ public class GuildMCFunctions {
 
         String guildplayerjson = serializationManager.serializeGuildProfile(gcreator);
         FileUtils.save(guildplayerfile, guildplayerjson);
+
+        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.BLUE + "Your Guild guild have been created"};
+        for(String i : messages){
+            creator.sendMessage(i);
+        }
+
     }
     public static void listAllGuild(){
         SerializationManager serializationManager = new SerializationManager();
