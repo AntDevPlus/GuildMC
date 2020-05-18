@@ -15,7 +15,7 @@ It's an open-source Minecraft guild plugin !
  - /guildmc spawn npc
  - /guildmc invite [player]
  - /guildmc accept
-
+ - /guildmc leave
 ## File System 💾
 This plugin create two directories in your *plugins/*
 it creates: 
