@@ -11,6 +11,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -123,7 +124,7 @@ public class GuildMCFunctions {
     public void displayGuildInfo(Player player){
         String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
-            player.sendMessage(guildPlayer.getRole().toString());
+            //player.sendMessage(guildPlayer.getRole().toString());
         }
     public void invitePlayer(GuildPlayer guildPlayer, Guild guild){
 

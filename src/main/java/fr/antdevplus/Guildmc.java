@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Giant;
 import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
@@ -108,6 +109,20 @@ public class Guildmc implements CommandExecutor {
                     String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You don't have guild"};
                     for(String i : messages){
                         sender.sendMessage(i);
+                    }
+                }
+
+            } else if (args[0].equalsIgnoreCase("players")) {
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                GuildRole grole = gsender.getRole();
+                Guild guild = Guild.getGuildByName(gsender.getGuild());
+                Set<String> plist = guild.getPlayers();
+                for(String i : plist){
+                    Player inList = Bukkit.getPlayer(i);
+                    if ( inList != null && inList.isOnline()) {
+                        sender.sendMessage(ChatColor.GREEN + i);
+                    } else {
+                        sender.sendMessage(ChatColor.RED + i);
                     }
                 }
 

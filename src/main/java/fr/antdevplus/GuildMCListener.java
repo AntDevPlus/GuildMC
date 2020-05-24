@@ -7,6 +7,7 @@ import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
 import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -58,6 +59,13 @@ public class GuildMCListener implements Listener {
     public void onPlayerConnect(PlayerJoinEvent e){
         Player p = e.getPlayer();
         GuildMCFunctions functions = new GuildMCFunctions();
+        GuildPlayer gp = GuildPlayer.getGuildPlayer(p);
+        Guild guild = Guild.getGuildByName(gp.getGuild());
+        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§e==-==-==-==-==-==-==-==-==-==-==", ChatColor.BLUE + "-= " + guild.getName() + " =-", ChatColor.AQUA + "Your role: " + gp.getRole(), ChatColor.GREEN + "Guild Level: " + guild.getExperience()};
+        for(String i : messages){
+            p.sendMessage(i);
+        }
+
         if (p.hasPlayedBefore()){
             functions.displayGuildInfo(p);
         } else {
