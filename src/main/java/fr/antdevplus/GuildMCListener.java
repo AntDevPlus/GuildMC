@@ -60,10 +60,12 @@ public class GuildMCListener implements Listener {
         Player p = e.getPlayer();
         GuildMCFunctions functions = new GuildMCFunctions();
         GuildPlayer gp = GuildPlayer.getGuildPlayer(p);
-        Guild guild = Guild.getGuildByName(gp.getGuild());
-        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§e==-==-==-==-==-==-==-==-==-==-==", ChatColor.BLUE + "-= " + guild.getName() + " =-", ChatColor.AQUA + "Your role: " + gp.getRole(), ChatColor.GREEN + "Guild Level: " + guild.getExperience()};
-        for(String i : messages){
-            p.sendMessage(i);
+        if(gp.getGuild() != null) {
+            Guild guild = Guild.getGuildByName(gp.getGuild());
+            String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§e==-==-==-==-==-==-==-==-==-==-==", ChatColor.BLUE + "-= " + guild.getName() + " =-", ChatColor.AQUA + "Your role: " + gp.getRole(), ChatColor.GREEN + "Guild Level: " + guild.getExperience()};
+            for (String i : messages) {
+                p.sendMessage(i);
+            }
         }
 
         if (p.hasPlayedBefore()){

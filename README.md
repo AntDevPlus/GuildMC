@@ -14,6 +14,7 @@ It's an open-source Minecraft guild plugin !
  - /guildmc wand 
  - /guildmc spawn npc
  - /guildmc invite [player]
+ - /guildmc kick [player]
  - /guildmc accept
  - /guildmc leave
 ## File System 💾

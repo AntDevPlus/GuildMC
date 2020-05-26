@@ -126,6 +126,25 @@ public class Guildmc implements CommandExecutor {
                     }
                 }
 
+            } else if (args[0].equalsIgnoreCase("kick") && args[1] != null){
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                GuildRole grole = gsender.getRole();
+                Guild guild = Guild.getGuildByName(gsender.getGuild());
+
+                if(grole == GuildRole.MODERATOR || grole == GuildRole.ADMINISTRATOR ||grole == GuildRole.CREATOR){
+                    Player kicked = Bukkit.getPlayer(args[1]);
+                    if (kicked != null){
+                        GuildPlayer gkicked = GuildPlayer.getGuildPlayer(kicked);
+                        gkicked.setRole(GuildRole.NONGUILDED);
+                        gkicked.setGuild(null);
+                        Set<String> players = guild.getPlayers();
+                        players.remove(kicked.getName());
+                        guild.setPlayers(players);
+                        sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC The member have been kicked");
+                    }
+                } else {
+                    sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC" + ChatColor.DARK_RED + "please use a valid command");
+                }
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
