@@ -17,6 +17,7 @@ It's an open-source Minecraft guild plugin !
  - /guildmc kick [player]
  - /guildmc accept
  - /guildmc leave
+ - /guildmc players
 ## File System 💾
 This plugin create two directories in your *plugins/*
 it creates: 
