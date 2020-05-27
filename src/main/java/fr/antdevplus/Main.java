@@ -3,14 +3,15 @@ package fr.antdevplus;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.utils.GuildMCFunctions;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Set;
 
 public class Main extends JavaPlugin {
     public static File saveGuildDir;
     public static File savePlayerDir;
-
     public static Main INSTANCE;
     @Override
     public void onEnable() {

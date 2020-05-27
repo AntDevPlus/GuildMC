@@ -5,6 +5,9 @@ import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -99,7 +102,9 @@ public class GuildMCFunctions {
         for(String i : messages){
             creator.sendMessage(i);
         }
-
+        for( Player iplayer : Bukkit.getOnlinePlayers() ){
+            iplayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("A new Guild Have been created: " + newguild.getName()).color(net.md_5.bungee.api.ChatColor.AQUA).create());
+        }
     }
     public static void listAllGuild(){
         SerializationManager serializationManager = new SerializationManager();

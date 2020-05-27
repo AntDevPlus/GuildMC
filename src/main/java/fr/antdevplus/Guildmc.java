@@ -51,7 +51,7 @@ public class Guildmc implements CommandExecutor {
                         sender.sendMessage(i);
                     }
 
-                    functions.REQUEST.put(invitePlayer, Guild.getGuildByName(gsender.getGuild()));
+                    GuildMCFunctions.REQUEST.put(invitePlayer, Guild.getGuildByName(gsender.getGuild()));
                     /*Guild guild = Guild.getGuildByName(gsender.getGuild());
                     guild.addPlayer(GuildPlayer.getGuildPlayer(invitePlayer));
                     Guild.flush(guild);*/
@@ -63,7 +63,7 @@ public class Guildmc implements CommandExecutor {
                 }
             } else if(args[0].equalsIgnoreCase("accept")){
                     //sender.sendMessage(functions.REQUEST.toString());//
-                    if(functions.REQUEST.containsKey(sender)){
+                    if(GuildMCFunctions.REQUEST.containsKey(sender)){
 
                         String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.BLUE + "Welcome in your new guild !"};
                         for(String i : messages){
@@ -90,7 +90,7 @@ public class Guildmc implements CommandExecutor {
                 Guild guild = Guild.getGuildByName(gsender.getGuild());
 
                 Set<String> players = guild.getPlayers();
-                if(players.contains(sender.getName()) && gsender.getGuild() != "default"){
+                if(players.contains(sender.getName()) && !gsender.getGuild().equals("default")){
 
                     String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC", ChatColor.RED + "You have leave this guild"};
                     for(String i : messages){
@@ -126,7 +126,7 @@ public class Guildmc implements CommandExecutor {
                     }
                 }
 
-            } else if (args[0].equalsIgnoreCase("kick") && args[1] != null){
+            } else if (args[0].equalsIgnoreCase("kick")) {
                 GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
                 GuildRole grole = gsender.getRole();
                 Guild guild = Guild.getGuildByName(gsender.getGuild());
@@ -141,9 +141,11 @@ public class Guildmc implements CommandExecutor {
                         players.remove(kicked.getName());
                         guild.setPlayers(players);
                         sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC The member have been kicked");
+                        Guild.flush(guild);
+                        GuildPlayer.flush(gkicked);
                     }
                 } else {
-                    sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC" + ChatColor.DARK_RED + "please use a valid command");
+                    sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC" + ChatColor.DARK_RED + "You don't have permission");
                 }
             }
         } else {
