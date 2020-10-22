@@ -147,6 +147,28 @@ public class Guildmc implements CommandExecutor {
                 } else {
                     sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC" + ChatColor.DARK_RED + "You don't have permission");
                 }
+            } else if (args[0].equalsIgnoreCase("info")){
+                GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+                Guild guild = Guild.getGuildByName(gsender.getGuild());
+
+                String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC",
+                                        ChatColor.BLUE + "Name: " + ChatColor.YELLOW + guild.getName(),
+                                        ChatColor.BLUE + "Description: " + ChatColor.YELLOW + guild.getDescription(),
+                                        ChatColor.BLUE + "Level: " + ChatColor.YELLOW + guild.getLevel(),
+                                        ChatColor.BLUE + "Experience: " + ChatColor.YELLOW + guild.getExperience(),
+                                        ChatColor.BLUE + "Players: "};
+                for(String i : messages){
+                    sender.sendMessage(i);
+                }
+                Set<String> plist = guild.getPlayers();
+                for(String i : plist){
+                    Player inList = Bukkit.getPlayer(i);
+                    if ( inList != null && inList.isOnline()) {
+                        sender.sendMessage(ChatColor.BLUE + "  ->" + ChatColor.GREEN + i);
+                    } else {
+                        sender.sendMessage(ChatColor.BLUE + "  ->" +ChatColor.RED + i);
+                    }
+                }
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
