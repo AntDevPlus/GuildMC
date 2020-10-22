@@ -10,10 +10,9 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -134,4 +133,17 @@ public class GuildMCFunctions {
     public void invitePlayer(GuildPlayer guildPlayer, Guild guild){
 
     }
+    public void spawnExperiencesInfos(Player player, float exp){
+        GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
+        if(gplayer.getRole() != GuildRole.NONGUILDED) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have kill entity, the experience given by this one partly returns to your guild").color(net.md_5.bungee.api.ChatColor.GREEN).create());
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 2);
+
+            Guild guild = Guild.getGuildByName(gplayer.getGuild());
+            guild.setExperience(guild.getExperience() + exp);
+            Guild.flush(guild);
+        }
+
+    }
+    
 }

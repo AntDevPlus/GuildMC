@@ -9,11 +9,13 @@ import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -67,7 +69,6 @@ public class GuildMCListener implements Listener {
                 p.sendMessage(i);
             }
         }
-
         if (p.hasPlayedBefore()){
             functions.displayGuildInfo(p);
         } else {
@@ -76,6 +77,16 @@ public class GuildMCListener implements Listener {
             String json = serializationManager.serializeGuildProfile(newgplayer);
             File file = new File(Main.savePlayerDir, p.getName()+".json");
             FileUtils.save(file,json);
+        }
+
+    }
+    @EventHandler
+    void OnEntityDeath(EntityDeathEvent e){
+        Entity killer = e.getEntity().getKiller();
+        int exp = e.getDroppedExp();
+        if(killer instanceof Player){
+            GuildMCFunctions functions = new GuildMCFunctions();
+            functions.spawnExperiencesInfos((Player) killer, exp);
         }
 
     }
