@@ -1,10 +1,14 @@
 package fr.antdevplus;
 
+import com.sk89q.worldedit.WorldEditException;
+import fr.antdevplus.gui.RaidGUI;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
+import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -168,6 +173,23 @@ public class Guildmc implements CommandExecutor {
                     } else {
                         sender.sendMessage(ChatColor.BLUE + "  ->" +ChatColor.RED + i);
                     }
+                }
+            } else if (args[0].equalsIgnoreCase("leveling")){
+                int x = sender.getLocation().getBlockX();
+                int y = sender.getLocation().getBlockY();
+                int z = sender.getLocation().getBlockZ();
+                sender.playSound(sender.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH,5,2);
+                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a times 20 200 20");
+                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a subtitle [\"\",{\"text\":\"x\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ x +"\",\"color\":\"yellow\"},{\"text\":\" y\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ y +"\",\"color\":\"yellow\"},{\"text\":\" z\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ z +"\",\"color\":\"yellow\"}]");
+                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a title [\"\",{\"text\":\"!! \",\"bold\":true,\"color\":\"green\"},{\"text\":\"New Raid \",\"bold\":true,\"color\":\"gold\"},{\"text\":\"!!\",\"bold\":true,\"color\":\"green\"}]");
+                RaidGUI raidGUI = new RaidGUI();
+                raidGUI.openInventory(sender);
+                try {
+                    functions.loadSchematic(sender, "totem");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (WorldEditException e) {
+                    e.printStackTrace();
                 }
             }
         } else {
