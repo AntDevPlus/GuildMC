@@ -7,3 +7,5 @@ commands:
   guildmc:
     description: GuildMC main command.
     aliases: [gmc]
+  instances:
+    description: To create instance.

@@ -1,11 +1,14 @@
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\objects\GuildPlayer.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\objects\GuildRole.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\objects\InstanceMob.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\utils\FileUtils.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\Instances.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\GuildMCListener.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\Main.java
+D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\objects\Instance.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\utils\GuildMCFunctions.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\gui\RaidGUI.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\objects\Guild.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\Guildmc.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\gui\MasterGUI.java
-D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\utils\FileUtils.java
-D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\GuildMCListener.java
-D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\Main.java
 D:\SparksDev\GuildMC\src\main\java\fr\antdevplus\json\SerializationManager.java

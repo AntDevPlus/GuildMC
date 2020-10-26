@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
+import fr.antdevplus.objects.InstanceMob;
 
 public class SerializationManager {
 
@@ -35,6 +36,14 @@ public class SerializationManager {
 
     public GuildPlayer deserializeProfile(String json){
         return this.gson.fromJson(json, GuildPlayer.class);
+    }
+
+    public String serializeInstanceMob(InstanceMob instanceMob){
+        return this.gson.toJson(instanceMob);
+    }
+
+    public InstanceMob deserializeInstanceMob(String json){
+        return this.gson.fromJson(json, InstanceMob.class);
     }
 
 }

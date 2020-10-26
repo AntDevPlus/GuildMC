@@ -151,7 +151,7 @@ public class GuildMCFunctions {
     public void spawnExperiencesInfos(Player player, float exp){
         GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
         if(gplayer.getRole() != GuildRole.NONGUILDED) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have kill entity, the experience given by this one partly returns to your guild").color(net.md_5.bungee.api.ChatColor.GREEN).create());
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("§f[§a+§f] §c" + exp +"§f exp").create());
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 2);
 
             Guild guild = Guild.getGuildByName(gplayer.getGuild());
@@ -182,5 +182,15 @@ public class GuildMCFunctions {
                     .build();
             Operations.complete(operation);
         }
+    }
+
+    public void displayRaidInfos(Player sender) {
+        int x = sender.getLocation().getBlockX();
+        int y = sender.getLocation().getBlockY();
+        int z = sender.getLocation().getBlockZ();
+        sender.playSound(sender.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH,5,2);
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a times 20 200 20");
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a subtitle [\"\",{\"text\":\"x\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ x +"\",\"color\":\"yellow\"},{\"text\":\" y\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ y +"\",\"color\":\"yellow\"},{\"text\":\" z\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ z +"\",\"color\":\"yellow\"}]");
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a title [\"\",{\"text\":\"!! \",\"bold\":true,\"color\":\"green\"},{\"text\":\"New Raid \",\"bold\":true,\"color\":\"gold\"},{\"text\":\"!!\",\"bold\":true,\"color\":\"green\"}]");
     }
 }

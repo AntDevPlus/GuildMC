@@ -9,20 +9,26 @@ import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import scala.Char;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class GuildMCListener implements Listener {
@@ -89,5 +95,35 @@ public class GuildMCListener implements Listener {
             functions.spawnExperiencesInfos((Player) killer, exp);
         }
 
+    }
+    @EventHandler
+    void onSignChange(SignChangeEvent e){
+        Player player = e.getPlayer();
+        if (player.hasPermission("guildmc.createRaid")){
+            if (e.getLine(0).equalsIgnoreCase("[RAID]")) {
+                e.setLine(0,ChatColor.WHITE + "[" + ChatColor.GOLD + "RAID" + ChatColor.WHITE + "]");
+                e.setLine(1, ChatColor.WHITE + e.getLine(1));
+                e.setLine(2, ChatColor.WHITE + e.getLine(2));
+                e.setLine(3, ChatColor.WHITE + e.getLine(3));
+                GuildMCFunctions functions = new GuildMCFunctions();
+                functions.displayRaidInfos(player);
+            }
+        } else {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    void onPlayerInteract(PlayerInteractEvent e){
+        Player player = e.getPlayer();
+        Block rawblock = e.getClickedBlock();
+        Material block = null;
+        if(rawblock != null){ block = rawblock.getType();}
+        if(block != null && block == Material.DARK_OAK_WALL_SIGN){
+            Sign sign = (Sign) e.getClickedBlock().getState();
+            if(sign.getLine(0).equalsIgnoreCase(ChatColor.WHITE + "[" + ChatColor.GOLD + "RAID" + ChatColor.WHITE + "]"))
+            {
+                player.sendMessage("gg");
+            }
+        }
     }
 }

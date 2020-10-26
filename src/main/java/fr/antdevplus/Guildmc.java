@@ -2,17 +2,18 @@ package fr.antdevplus;
 
 import com.sk89q.worldedit.WorldEditException;
 import fr.antdevplus.gui.RaidGUI;
-import fr.antdevplus.objects.Guild;
-import fr.antdevplus.objects.GuildPlayer;
-import fr.antdevplus.objects.GuildRole;
+import fr.antdevplus.objects.*;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Giant;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
@@ -169,19 +170,13 @@ public class Guildmc implements CommandExecutor {
                 for(String i : plist){
                     Player inList = Bukkit.getPlayer(i);
                     if ( inList != null && inList.isOnline()) {
-                        sender.sendMessage(ChatColor.BLUE + "  ->" + ChatColor.GREEN + i);
+                        sender.sendMessage(ChatColor.WHITE + "  -> " + ChatColor.GREEN + i);
                     } else {
-                        sender.sendMessage(ChatColor.BLUE + "  ->" +ChatColor.RED + i);
+                        sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
                     }
                 }
             } else if (args[0].equalsIgnoreCase("leveling")){
-                int x = sender.getLocation().getBlockX();
-                int y = sender.getLocation().getBlockY();
-                int z = sender.getLocation().getBlockZ();
-                sender.playSound(sender.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH,5,2);
-                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a times 20 200 20");
-                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a subtitle [\"\",{\"text\":\"x\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ x +"\",\"color\":\"yellow\"},{\"text\":\" y\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ y +"\",\"color\":\"yellow\"},{\"text\":\" z\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ z +"\",\"color\":\"yellow\"}]");
-                sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a title [\"\",{\"text\":\"!! \",\"bold\":true,\"color\":\"green\"},{\"text\":\"New Raid \",\"bold\":true,\"color\":\"gold\"},{\"text\":\"!!\",\"bold\":true,\"color\":\"green\"}]");
+                //functions.displayRaidInfos(sender);
                 RaidGUI raidGUI = new RaidGUI();
                 raidGUI.openInventory(sender);
                 try {
@@ -191,6 +186,11 @@ public class Guildmc implements CommandExecutor {
                 } catch (WorldEditException e) {
                     e.printStackTrace();
                 }
+            } else if (args[0].equalsIgnoreCase("spawnmob")) {
+                sender.sendMessage(EntityType.CHICKEN.toString());
+                InstanceMob instanceMob = new InstanceMob("Test", 20, EntityType.CHICKEN.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
+                InstanceMob.flush(instanceMob);
+
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
