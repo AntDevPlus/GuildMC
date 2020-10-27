@@ -67,16 +67,18 @@ public class GuildMCListener implements Listener {
     public void onPlayerConnect(PlayerJoinEvent e){
         Player p = e.getPlayer();
         GuildMCFunctions functions = new GuildMCFunctions();
-        GuildPlayer gp = GuildPlayer.getGuildPlayer(p);
-        if(gp.getGuild() != null) {
-            Guild guild = Guild.getGuildByName(gp.getGuild());
-            String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§e==-==-==-==-==-==-==-==-==-==-==", ChatColor.BLUE + "-= " + guild.getName() + " =-", ChatColor.AQUA + "Your role: " + gp.getRole(), ChatColor.GREEN + "Guild Level: " + guild.getExperience()};
-            for (String i : messages) {
-                p.sendMessage(i);
-            }
-        }
         if (p.hasPlayedBefore()){
             functions.displayGuildInfo(p);
+            GuildPlayer gp = GuildPlayer.getGuildPlayer(p);
+            if(gp.getRole() != GuildRole.NONGUILDED) {
+                Guild guild = Guild.getGuildByName(gp.getGuild());
+                String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§e==-==-==-==-==-==-==-==-==-==-==", ChatColor.BLUE + "-= " + guild.getName() + " =-", ChatColor.AQUA + "Your role: " + gp.getRole(), ChatColor.GREEN + "Guild Level: " + guild.getExperience()};
+                for (String i : messages) {
+                    p.sendMessage(i);
+                }
+            } else {
+                p.sendMessage("§f[§aGuildMC§f] You don't have guild.");
+            }
         } else {
             GuildPlayer newgplayer = new GuildPlayer(p.getName(),GuildRole.NONGUILDED,false, "default");
             SerializationManager serializationManager = new SerializationManager();

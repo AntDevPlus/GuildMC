@@ -18,6 +18,15 @@ public class Main extends JavaPlugin {
     public static File saveInstanceMobsDir;
 
     public void createDir(){
+        if (!savePlayerDir.exists()){
+            savePlayerDir.mkdir();
+        }
+        if (!saveGuildDir.exists()){
+            saveGuildDir.mkdir();
+        }
+        if (!saveInstanceMobsDir.exists()){
+            saveInstanceMobsDir.mkdir();
+        }
         if (!saveInstancesDir.exists()){
             saveInstancesDir.mkdir();
         }

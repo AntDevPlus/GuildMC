@@ -58,7 +58,9 @@ public class GuildPlayer {
     }
 
     public static GuildPlayer getGuildPlayer(Player player){
-        String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
+
+        File file = new File(main.savePlayerDir, player.getName() + ".json");
+        String json = fileUtils.loadContent(file);
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
         return guildPlayer;
     }
