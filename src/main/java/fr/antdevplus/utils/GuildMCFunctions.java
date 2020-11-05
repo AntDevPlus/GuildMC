@@ -37,6 +37,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * @author AntDevPlus
+ * @version 1.0
+ * This class references all function of the plugin
+ */
 public class GuildMCFunctions {
 
     public static Set<Guild> GUILDLIST = new HashSet<Guild>();
@@ -47,9 +52,16 @@ public class GuildMCFunctions {
     SerializationManager serializationManager = new SerializationManager();
     FileUtils fileUtils = new FileUtils();
 
+
     public GuildMCFunctions() {
     }
 
+    /**
+     * Give the powerfull wand to op
+     * @param gamemaster
+     * Just a bukkit/spigot player
+     * @see Player
+     */
     public void giveGuildWand(Player gamemaster){
         String WAND_NAME = "§6§l[§a§lGuildMC§6§l] §r§eMaster Wand";
 
@@ -61,6 +73,14 @@ public class GuildMCFunctions {
         wand.setItemMeta(wandMeta);
         gamemaster.getInventory().addItem(wand);
     }
+
+    /**
+     * Spawn the NPC "Master of Guild" who display MasterGUi
+     * @param gamemaster
+     * krakito
+     * @see Player
+     * @see fr.antdevplus.gui.MasterGUI
+     */
     public void spawnGuildNPC(Player gamemaster){
         Villager guildnpc = (Villager) gamemaster.getWorld().spawnEntity(gamemaster.getLocation(), EntityType.VILLAGER);
         guildnpc.setCanPickupItems(false);
@@ -76,6 +96,12 @@ public class GuildMCFunctions {
             player.sendMessage(i);
         }
     }
+
+    /**
+     * Save player in List who player have the creator power
+     * @param player
+     * the player that must be add in creatorList
+     */
     public void addPlayerToCreatorList(Player player){
 
         GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
@@ -95,6 +121,14 @@ public class GuildMCFunctions {
 
         }
     }
+
+    /**
+     * Create {@link Guild} by a creator
+     * @param guildName
+     * {@link Guild} name
+     * @param creator
+     * Player who is in creatorList
+     */
     public void createGuild(String guildName, Player creator){
 
         final File guildfile = new File(main.saveGuildDir, guildName +".json");
@@ -120,6 +154,10 @@ public class GuildMCFunctions {
             iplayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("A new Guild Have been created: " + newguild.getName()).color(net.md_5.bungee.api.ChatColor.AQUA).create());
         }
     }
+
+    /**
+     * Save all {@link Guild} names in a list
+     */
     public static void listAllGuild(){
         SerializationManager serializationManager = new SerializationManager();
         FileUtils guildFileSystem = new FileUtils();
@@ -130,6 +168,10 @@ public class GuildMCFunctions {
                 GUILDLIST.add(guild);
         }
     }
+
+    /**
+     * Stock all {@link GuildPlayer}
+     */
     public static void listAllPlayerGuild(){
         SerializationManager serializationManager = new SerializationManager();
         FileUtils guildFileSystem = new FileUtils();
@@ -140,14 +182,36 @@ public class GuildMCFunctions {
             GUILDPLAYERLIST.add(guildPlayer);
         }
     }
+
+    /**
+     * Display to player informations from his {@link Guild}
+     * @param player
+     * {@link Player}
+     */
     public void displayGuildInfo(Player player){
         String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
             //player.sendMessage(guildPlayer.getRole().toString());
-        }
+    }
+
+    /**
+     * Invite {@link Player} but this method have been abandonned
+     * @param guildPlayer
+     * {@link GuildPlayer}
+     * @param guild
+     * {@link Guild}
+     */
     public void invitePlayer(GuildPlayer guildPlayer, Guild guild){
 
     }
+
+    /**
+     * Send to {@link GuildPlayer} a little message who say the xp give to his {@link Guild}
+     * @param player
+     * Spigot player
+     * @param exp
+     * Generaly xp drops by entity who has been killed.
+     */
     public void spawnExperiencesInfos(Player player, float exp){
         GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
         if(gplayer.getRole() != GuildRole.NONGUILDED) {
@@ -160,6 +224,18 @@ public class GuildMCFunctions {
         }
 
     }
+
+    /**
+     *
+     * @param player
+     * Spigot/Bukkit Player
+     * @param structure
+     * structure extract from schematics name
+     * @throws IOException
+     * If the schematics file can't be find
+     * @throws WorldEditException
+     * Please see the WorldEdit documentation
+     */
     public void loadSchematic(Player player, String structure) throws IOException, WorldEditException {
 
         Location location = player.getLocation();
@@ -184,6 +260,11 @@ public class GuildMCFunctions {
         }
     }
 
+    /**
+     * Send Informations when RAID comes
+     * @param sender
+     * Spigot/Bukkit Player
+     */
     public void displayRaidInfos(Player sender) {
         int x = sender.getLocation().getBlockX();
         int y = sender.getLocation().getBlockY();

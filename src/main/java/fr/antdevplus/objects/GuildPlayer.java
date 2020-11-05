@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 
+/**
+ * @author: AntDev+
+ * @version: 1.0
+ */
 public class GuildPlayer {
 
         static Main main;
@@ -18,6 +22,17 @@ public class GuildPlayer {
         private Boolean isCreator;
         private String guildname;
 
+    /**
+     * @param name
+     * Name of player
+     * @param role
+     * Role of the player
+     * @see GuildRole
+     * @param isCreator
+     * If he has creator power
+     * @param guildname
+     * Name of the guild
+     */
     public GuildPlayer(String name, GuildRole role, Boolean isCreator, String guildname) {
         this.name = name;
         this.role = role;
@@ -57,14 +72,27 @@ public class GuildPlayer {
         isCreator = creator;
     }
 
+    /**
+     * Method to unserialize GuildPlayer from JSON
+     * @param player
+     * Minecraft player instance
+     * @see Player
+     * @return GuildPlayer deserialize from JSON
+     */
     public static GuildPlayer getGuildPlayer(Player player){
-
         File file = new File(main.savePlayerDir, player.getName() + ".json");
         String json = fileUtils.loadContent(file);
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
         return guildPlayer;
     }
 
+    /**
+     * Method to serialize the JSON of GuildPlayer
+     * @see FileUtils
+     * @param guildPlayer
+     * serialize the GuildPlayer
+     * Uses: GuildPlayer.flush(guildPlayer) = Generates in /GuildPlayers/player.json
+     */
     public static void flush(GuildPlayer guildPlayer){
         final File guildfile = new File(Main.savePlayerDir, guildPlayer.getName() +".json");
         String json = serializationManager.serializeGuildProfile(guildPlayer);

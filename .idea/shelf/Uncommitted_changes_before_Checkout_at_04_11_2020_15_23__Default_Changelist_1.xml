@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_04_11_2020_15_23_[Default_Changelist]1" date="1604499848312" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_11_2020_15_23_[Default_Changelist]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 04/11/2020 15:23 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/guild-1.0-SNAPSHOT.jar" />
+    <option name="AFTER_PATH" value="target/guild-1.0-SNAPSHOT.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_11_2020_15_23_[Default_Changelist]1/guild-1.0-SNAPSHOT.jar" />
+  </binary>
+</changelist>

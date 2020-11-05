@@ -31,6 +31,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This file is the Listener of this plugin, working with the server Listener of Bukkit/Spigot
+ */
 public class GuildMCListener implements Listener {
 
     private Main plugin;
@@ -51,6 +54,12 @@ public class GuildMCListener implements Listener {
             }
         }
     }
+
+    /**
+     * Player click item on this inventory
+     * @param e
+     * InventoryClickEvent
+     */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e)
     {
@@ -63,6 +72,11 @@ public class GuildMCListener implements Listener {
             e.setCancelled(true);
         }
     }
+
+    /**
+     * Event when a player join the server
+     * @param e
+     */
     @EventHandler
     public void onPlayerConnect(PlayerJoinEvent e){
         Player p = e.getPlayer();
@@ -88,6 +102,11 @@ public class GuildMCListener implements Listener {
         }
 
     }
+
+    /**
+     * When entity was killed
+     * @param e
+     */
     @EventHandler
     void OnEntityDeath(EntityDeathEvent e){
         Entity killer = e.getEntity().getKiller();
@@ -98,6 +117,11 @@ public class GuildMCListener implements Listener {
         }
 
     }
+
+    /**
+     * When sign have been changed
+     * @param e
+     */
     @EventHandler
     void onSignChange(SignChangeEvent e){
         Player player = e.getPlayer();
@@ -114,6 +138,11 @@ public class GuildMCListener implements Listener {
             e.setCancelled(true);
         }
     }
+
+    /**
+     * When player interact with entity
+     * @param e
+     */
     @EventHandler
     void onPlayerInteract(PlayerInteractEvent e){
         Player player = e.getPlayer();

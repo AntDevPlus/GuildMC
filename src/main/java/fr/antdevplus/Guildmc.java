@@ -4,10 +4,7 @@ import com.sk89q.worldedit.WorldEditException;
 import fr.antdevplus.gui.RaidGUI;
 import fr.antdevplus.objects.*;
 import net.md_5.bungee.api.ChatMessageType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +14,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.List;
@@ -187,10 +185,9 @@ public class Guildmc implements CommandExecutor {
                     e.printStackTrace();
                 }
             } else if (args[0].equalsIgnoreCase("spawnmob")) {
-                sender.sendMessage(EntityType.CHICKEN.toString());
-                InstanceMob instanceMob = new InstanceMob("Test", 20, EntityType.CHICKEN.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
+                InstanceMob instanceMob = new InstanceMob("Test", 20, EntityType.ZOMBIE.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
                 InstanceMob.flush(instanceMob);
-
+                instanceMob.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");

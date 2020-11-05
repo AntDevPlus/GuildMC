@@ -5,9 +5,12 @@ import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.utils.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
@@ -114,5 +117,20 @@ public class InstanceMob {
         final File instanceMobFile = new File(Main.saveInstanceMobsDir, instanceMob.getMobName() +".json");
         String json = serializationManager.serializeInstanceMob(instanceMob);
         fileUtils.save(instanceMobFile, json);
+    }
+    public void setHelmet(ItemStack itemstack){
+        entity.getEquipment().setHelmet(itemstack);
+    }
+    public void setChestplate(ItemStack itemstack){
+        entity.getEquipment().setChestplate(itemstack);
+    }
+    public void setLeggings(ItemStack itemstack){
+        entity.getEquipment().setLeggings(itemstack);
+    }
+    public void setBoots(ItemStack itemstack){
+        entity.getEquipment().setBoots(itemstack);
+    }
+    public void setWeapons(ItemStack itemstack){
+        entity.getEquipment().setItemInMainHand(itemstack);
     }
 }
