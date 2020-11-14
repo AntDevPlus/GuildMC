@@ -17,24 +17,6 @@ public class Main extends JavaPlugin {
     public static File saveSchematicsDir;
     public static File saveInstanceMobsDir;
 
-    public void createDir(){
-        if (!savePlayerDir.exists()){
-            savePlayerDir.mkdir();
-        }
-        if (!saveGuildDir.exists()){
-            saveGuildDir.mkdir();
-        }
-        if (!saveInstanceMobsDir.exists()){
-            saveInstanceMobsDir.mkdir();
-        }
-        if (!saveInstancesDir.exists()){
-            saveInstancesDir.mkdir();
-        }
-        if (!saveSchematicsDir.exists()){
-            saveInstancesDir.mkdir();
-        }
-    }
-
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -51,5 +33,23 @@ public class Main extends JavaPlugin {
         createDir();
         GuildMCFunctions.listAllGuild();
         GuildMCFunctions.listAllPlayerGuild();
+    }
+
+    public void createDir(){
+        if (!savePlayerDir.exists()){
+            savePlayerDir.mkdir();
+        }
+        if (!saveGuildDir.exists()){
+            saveGuildDir.mkdir();
+        }
+        if (!saveInstanceMobsDir.exists()){
+            saveInstanceMobsDir.mkdir();
+        }
+        if (!saveInstancesDir.exists()){
+            saveInstancesDir.mkdir();
+        }
+        if (!saveSchematicsDir.exists()){
+            saveInstancesDir.mkdir();
+        }
     }
 }

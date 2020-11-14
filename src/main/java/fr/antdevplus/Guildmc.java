@@ -185,9 +185,9 @@ public class Guildmc implements CommandExecutor {
                     e.printStackTrace();
                 }
             } else if (args[0].equalsIgnoreCase("spawnmob")) {
-                InstanceMob instanceMob = new InstanceMob("Test", 20, EntityType.ZOMBIE.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
+                InstanceMob instanceMob = new InstanceMob(args[1], 20, EntityType.ZOMBIE.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
                 InstanceMob.flush(instanceMob);
-                instanceMob.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+                instanceMob.setHelmet(new ItemStack(Material.DIAMOND_CHESTPLATE));
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");

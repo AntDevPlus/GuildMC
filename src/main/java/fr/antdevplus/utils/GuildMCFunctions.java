@@ -20,6 +20,7 @@ import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
+import fr.antdevplus.objects.Instance;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.*;
@@ -273,5 +274,22 @@ public class GuildMCFunctions {
         sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a times 20 200 20");
         sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a subtitle [\"\",{\"text\":\"x\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ x +"\",\"color\":\"yellow\"},{\"text\":\" y\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ y +"\",\"color\":\"yellow\"},{\"text\":\" z\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ z +"\",\"color\":\"yellow\"}]");
         sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a title [\"\",{\"text\":\"!! \",\"bold\":true,\"color\":\"green\"},{\"text\":\"New Raid \",\"bold\":true,\"color\":\"gold\"},{\"text\":\"!!\",\"bold\":true,\"color\":\"green\"}]");
+    }
+
+    public void createWorld(String instanceName, Player player){
+        if (Bukkit.getWorld(instanceName) == null ) {
+            WorldCreator worldcreator = new WorldCreator(instanceName);
+            worldcreator.type(WorldType.FLAT);
+            worldcreator.generateStructures(false);
+            worldcreator.createWorld();
+            player.teleport(Bukkit.getWorld(instanceName).getSpawnLocation());
+            Bukkit.getLogger().warning("A new instance have been created !");
+            Instance instance = new Instance(instanceName, Bukkit.getWorld(instanceName).getSpawnLocation(), 5, null);
+            Instance.flush(instance);
+        } else {
+            player.teleport(Bukkit.getWorld(instanceName).getSpawnLocation());
+            Instance instance = new Instance(instanceName, Bukkit.getWorld(instanceName).getSpawnLocation(), 5, null);
+            Instance.flush(instance);
+        }
     }
 }
