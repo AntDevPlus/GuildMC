@@ -1,4 +1,4 @@
-package fr.antdevplus.objects;
+package fr.antdevplus.objects.guild;
 
 public enum GuildRole {
 

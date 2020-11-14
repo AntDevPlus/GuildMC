@@ -2,9 +2,9 @@ package fr.antdevplus;
 
 import fr.antdevplus.gui.MasterGUI;
 import fr.antdevplus.json.SerializationManager;
-import fr.antdevplus.objects.Guild;
-import fr.antdevplus.objects.GuildPlayer;
-import fr.antdevplus.objects.GuildRole;
+import fr.antdevplus.objects.guild.Guild;
+import fr.antdevplus.objects.guild.GuildPlayer;
+import fr.antdevplus.objects.guild.GuildRole;
 import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.ChatColor;
@@ -23,13 +23,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
-import scala.Char;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * This file is the Listener of this plugin, working with the server Listener of Bukkit/Spigot

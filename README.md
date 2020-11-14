@@ -33,3 +33,6 @@ it creates:
 
 Guilds will be able to compete in PvE instances. Administrators should spawn gates with the command "/guildmc leveling" and then create instances with "/instances create [Name]". 
 Then create mobs customs with command "/gmc spawnmob".
+
+## Influences
+![] (https://i.ibb.co/vH4tf9B/Untitled-Diagram-1.png)

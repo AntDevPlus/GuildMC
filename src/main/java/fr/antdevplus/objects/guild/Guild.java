@@ -1,9 +1,8 @@
-package fr.antdevplus.objects;
+package fr.antdevplus.objects.guild;
 
 import fr.antdevplus.Main;
 import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.utils.FileUtils;
-import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;

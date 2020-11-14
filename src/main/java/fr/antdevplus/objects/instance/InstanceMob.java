@@ -1,4 +1,4 @@
-package fr.antdevplus.objects;
+package fr.antdevplus.objects.instance;
 
 import fr.antdevplus.Main;
 import fr.antdevplus.json.SerializationManager;

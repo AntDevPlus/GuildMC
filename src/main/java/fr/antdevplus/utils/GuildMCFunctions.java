@@ -9,7 +9,6 @@ import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import com.sk89q.worldedit.extent.clipboard.io.MCEditSchematicReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -17,16 +16,15 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import fr.antdevplus.Main;
 import fr.antdevplus.json.SerializationManager;
-import fr.antdevplus.objects.Guild;
-import fr.antdevplus.objects.GuildPlayer;
-import fr.antdevplus.objects.GuildRole;
-import fr.antdevplus.objects.Instance;
+import fr.antdevplus.objects.guild.Guild;
+import fr.antdevplus.objects.guild.GuildPlayer;
+import fr.antdevplus.objects.guild.GuildRole;
+import fr.antdevplus.objects.instance.Instance;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -34,7 +32,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -189,10 +186,28 @@ public class GuildMCFunctions {
      * @param player
      * {@link Player}
      */
-    public void displayGuildInfo(Player player){
-        String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
-        GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
-            //player.sendMessage(guildPlayer.getRole().toString());
+    public void displayGuildInfo(Player sender){
+        GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
+        Guild guild = Guild.getGuildByName(gsender.getGuild());
+
+        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC",
+                ChatColor.BLUE + "Name: " + ChatColor.YELLOW + guild.getName(),
+                ChatColor.BLUE + "Description: " + ChatColor.YELLOW + guild.getDescription(),
+                ChatColor.BLUE + "Level: " + ChatColor.YELLOW + guild.getLevel(),
+                ChatColor.BLUE + "Experience: " + ChatColor.YELLOW + guild.getExperience(),
+                ChatColor.BLUE + "Players: "};
+        for(String i : messages){
+            sender.sendMessage(i);
+        }
+        Set<String> plist = guild.getPlayers();
+        for(String i : plist){
+            Player inList = Bukkit.getPlayer(i);
+            if ( inList != null && inList.isOnline()) {
+                sender.sendMessage(ChatColor.WHITE + "  -> " + ChatColor.GREEN + i);
+            } else {
+                sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
+            }
+        }
     }
 
     /**

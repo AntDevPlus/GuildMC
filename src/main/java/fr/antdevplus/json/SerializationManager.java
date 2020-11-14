@@ -2,10 +2,10 @@ package fr.antdevplus.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import fr.antdevplus.objects.Guild;
-import fr.antdevplus.objects.GuildPlayer;
-import fr.antdevplus.objects.Instance;
-import fr.antdevplus.objects.InstanceMob;
+import fr.antdevplus.objects.guild.Guild;
+import fr.antdevplus.objects.guild.GuildPlayer;
+import fr.antdevplus.objects.instance.Instance;
+import fr.antdevplus.objects.instance.InstanceMob;
 
 public class SerializationManager {
 

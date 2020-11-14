@@ -1,23 +1,23 @@
 package fr.antdevplus;
 
 import com.sk89q.worldedit.WorldEditException;
+import fr.antdevplus.gui.GuildGUI;
 import fr.antdevplus.gui.RaidGUI;
-import fr.antdevplus.objects.*;
-import net.md_5.bungee.api.ChatMessageType;
+import fr.antdevplus.objects.guild.Guild;
+import fr.antdevplus.objects.guild.GuildPlayer;
+import fr.antdevplus.objects.guild.GuildRole;
+import fr.antdevplus.objects.instance.InstanceMob;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Giant;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 public class Guildmc implements CommandExecutor {
@@ -188,6 +188,9 @@ public class Guildmc implements CommandExecutor {
                 InstanceMob instanceMob = new InstanceMob(args[1], 20, EntityType.ZOMBIE.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
                 InstanceMob.flush(instanceMob);
                 instanceMob.setHelmet(new ItemStack(Material.DIAMOND_CHESTPLATE));
+            } else if (args[0].equalsIgnoreCase("influence")){
+                GuildGUI gui = new GuildGUI();
+                gui.openInventory(sender);
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");
