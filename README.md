@@ -18,8 +18,18 @@ It's an open-source Minecraft guild plugin !
  - /guildmc accept
  - /guildmc leave
  - /guildmc players
+ - /guildmc info
+ - /guildmc spawnmob
+ 
+ - /instances
 ## File System 💾
 This plugin create two directories in your *plugins/*
 it creates: 
 - ./GuildMC/guilds/*.json ➡️ all JSON files concerning guilds
 - ./GuildMC/guildPlayers/*.json  ➡️  all JSON files concercings players
+
+## Creation of instances
+### However this system has been stopped in its development "Raiding branch".
+
+Guilds will be able to compete in PvE instances. Administrators should spawn gates with the command "/guildmc leveling" and then create instances with "/instances create [Name]". 
+Then create mobs customs with command "/gmc spawnmob".

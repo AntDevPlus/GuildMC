@@ -36,7 +36,6 @@ public class MasterGUI implements InventoryHolder, Listener {
     {
         inv.setItem(2,createGuiItem(Material.NETHER_STAR, "§6§l[§a§lGuildMC§6§l] §r§eCreate Guild", "§aGoodluck", "§bpas cher"));
         inv.setItem(6,createGuiItem(Material.BARRIER, "§6§l[§a§lGuildMC§6§l] §r§4Delete Guild", "§c Poor guy"));
-
         for(int i : new int[] {0, 1, 3, 4, 5, 7, 8}){
             inv.setItem(i,createGuiItem(Material.GREEN_STAINED_GLASS_PANE, "§6§l[§a§lGuildMC§6§l]", ""));
         }
@@ -50,12 +49,9 @@ public class MasterGUI implements InventoryHolder, Listener {
 
         // Set the name of the item
         meta.setDisplayName(name);
-
         // Set the lore of the item
         meta.setLore(Arrays.asList(lore));
-
         item.setItemMeta(meta);
-
         return item;
     }
 

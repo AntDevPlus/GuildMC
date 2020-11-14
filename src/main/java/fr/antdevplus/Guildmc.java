@@ -1,18 +1,22 @@
 package fr.antdevplus;
 
-import fr.antdevplus.objects.Guild;
-import fr.antdevplus.objects.GuildPlayer;
-import fr.antdevplus.objects.GuildRole;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import com.sk89q.worldedit.WorldEditException;
+import fr.antdevplus.gui.RaidGUI;
+import fr.antdevplus.objects.*;
+import net.md_5.bungee.api.ChatMessageType;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Giant;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import fr.antdevplus.utils.GuildMCFunctions;
+import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -164,11 +168,26 @@ public class Guildmc implements CommandExecutor {
                 for(String i : plist){
                     Player inList = Bukkit.getPlayer(i);
                     if ( inList != null && inList.isOnline()) {
-                        sender.sendMessage(ChatColor.BLUE + "  ->" + ChatColor.GREEN + i);
+                        sender.sendMessage(ChatColor.WHITE + "  -> " + ChatColor.GREEN + i);
                     } else {
-                        sender.sendMessage(ChatColor.BLUE + "  ->" +ChatColor.RED + i);
+                        sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
                     }
                 }
+            } else if (args[0].equalsIgnoreCase("leveling")){
+                //functions.displayRaidInfos(sender);
+                RaidGUI raidGUI = new RaidGUI();
+                raidGUI.openInventory(sender);
+                try {
+                    functions.loadSchematic(sender, "totem");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (WorldEditException e) {
+                    e.printStackTrace();
+                }
+            } else if (args[0].equalsIgnoreCase("spawnmob")) {
+                InstanceMob instanceMob = new InstanceMob(args[1], 20, EntityType.ZOMBIE.toString(), sender.getWorld().getName(), sender.getLocation().getBlockX(),sender.getLocation().getBlockY(), sender.getLocation().getBlockZ());
+                InstanceMob.flush(instanceMob);
+                instanceMob.setHelmet(new ItemStack(Material.DIAMOND_CHESTPLATE));
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");

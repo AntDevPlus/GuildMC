@@ -1,16 +1,29 @@
 package fr.antdevplus.utils;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.extent.clipboard.io.MCEditSchematicReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.World;
 import fr.antdevplus.Main;
 import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.objects.Guild;
 import fr.antdevplus.objects.GuildPlayer;
 import fr.antdevplus.objects.GuildRole;
+import fr.antdevplus.objects.Instance;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -20,8 +33,16 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
+/**
+ * @author AntDevPlus
+ * @version 1.0
+ * This class references all function of the plugin
+ */
 public class GuildMCFunctions {
 
     public static Set<Guild> GUILDLIST = new HashSet<Guild>();
@@ -32,9 +53,16 @@ public class GuildMCFunctions {
     SerializationManager serializationManager = new SerializationManager();
     FileUtils fileUtils = new FileUtils();
 
+
     public GuildMCFunctions() {
     }
 
+    /**
+     * Give the powerfull wand to op
+     * @param gamemaster
+     * Just a bukkit/spigot player
+     * @see Player
+     */
     public void giveGuildWand(Player gamemaster){
         String WAND_NAME = "§6§l[§a§lGuildMC§6§l] §r§eMaster Wand";
 
@@ -46,6 +74,14 @@ public class GuildMCFunctions {
         wand.setItemMeta(wandMeta);
         gamemaster.getInventory().addItem(wand);
     }
+
+    /**
+     * Spawn the NPC "Master of Guild" who display MasterGUi
+     * @param gamemaster
+     * krakito
+     * @see Player
+     * @see fr.antdevplus.gui.MasterGUI
+     */
     public void spawnGuildNPC(Player gamemaster){
         Villager guildnpc = (Villager) gamemaster.getWorld().spawnEntity(gamemaster.getLocation(), EntityType.VILLAGER);
         guildnpc.setCanPickupItems(false);
@@ -61,6 +97,12 @@ public class GuildMCFunctions {
             player.sendMessage(i);
         }
     }
+
+    /**
+     * Save player in List who player have the creator power
+     * @param player
+     * the player that must be add in creatorList
+     */
     public void addPlayerToCreatorList(Player player){
 
         GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
@@ -80,6 +122,14 @@ public class GuildMCFunctions {
 
         }
     }
+
+    /**
+     * Create {@link Guild} by a creator
+     * @param guildName
+     * {@link Guild} name
+     * @param creator
+     * Player who is in creatorList
+     */
     public void createGuild(String guildName, Player creator){
 
         final File guildfile = new File(main.saveGuildDir, guildName +".json");
@@ -105,6 +155,10 @@ public class GuildMCFunctions {
             iplayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("A new Guild Have been created: " + newguild.getName()).color(net.md_5.bungee.api.ChatColor.AQUA).create());
         }
     }
+
+    /**
+     * Save all {@link Guild} names in a list
+     */
     public static void listAllGuild(){
         SerializationManager serializationManager = new SerializationManager();
         FileUtils guildFileSystem = new FileUtils();
@@ -115,6 +169,10 @@ public class GuildMCFunctions {
                 GUILDLIST.add(guild);
         }
     }
+
+    /**
+     * Stock all {@link GuildPlayer}
+     */
     public static void listAllPlayerGuild(){
         SerializationManager serializationManager = new SerializationManager();
         FileUtils guildFileSystem = new FileUtils();
@@ -125,18 +183,40 @@ public class GuildMCFunctions {
             GUILDPLAYERLIST.add(guildPlayer);
         }
     }
+
+    /**
+     * Display to player informations from his {@link Guild}
+     * @param player
+     * {@link Player}
+     */
     public void displayGuildInfo(Player player){
         String json = fileUtils.loadContent(new File(main.savePlayerDir, player.getName() + ".json"));
         GuildPlayer guildPlayer = serializationManager.deserializeProfile(json);
             //player.sendMessage(guildPlayer.getRole().toString());
-        }
+    }
+
+    /**
+     * Invite {@link Player} but this method have been abandonned
+     * @param guildPlayer
+     * {@link GuildPlayer}
+     * @param guild
+     * {@link Guild}
+     */
     public void invitePlayer(GuildPlayer guildPlayer, Guild guild){
 
     }
+
+    /**
+     * Send to {@link GuildPlayer} a little message who say the xp give to his {@link Guild}
+     * @param player
+     * Spigot player
+     * @param exp
+     * Generaly xp drops by entity who has been killed.
+     */
     public void spawnExperiencesInfos(Player player, float exp){
         GuildPlayer gplayer = GuildPlayer.getGuildPlayer(player);
         if(gplayer.getRole() != GuildRole.NONGUILDED) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have kill entity, the experience given by this one partly returns to your guild").color(net.md_5.bungee.api.ChatColor.GREEN).create());
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("§f[§a+§f] §c" + exp +"§f exp").create());
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 2);
 
             Guild guild = Guild.getGuildByName(gplayer.getGuild());
@@ -145,5 +225,71 @@ public class GuildMCFunctions {
         }
 
     }
-    
+
+    /**
+     *
+     * @param player
+     * Spigot/Bukkit Player
+     * @param structure
+     * structure extract from schematics name
+     * @throws IOException
+     * If the schematics file can't be find
+     * @throws WorldEditException
+     * Please see the WorldEdit documentation
+     */
+    public void loadSchematic(Player player, String structure) throws IOException, WorldEditException {
+
+        Location location = player.getLocation();
+        WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+
+        Clipboard clipboard;
+
+        File file = new File(worldEditPlugin.getDataFolder(), "/schematics/"+structure+".schem");
+        if (!file.exists()){System.out.println("EXISTE PAS !!!!!");}
+        ClipboardFormat format = ClipboardFormats.findByFile(file);
+        try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
+            clipboard = reader.read();
+        }
+        World world = new BukkitWorld(player.getWorld());
+        try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(world, -1)) {
+            Operation operation = new ClipboardHolder(clipboard)
+                    .createPaste(editSession)
+                    .to(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
+                    .ignoreAirBlocks(false)
+                    .build();
+            Operations.complete(operation);
+        }
+    }
+
+    /**
+     * Send Informations when RAID comes
+     * @param sender
+     * Spigot/Bukkit Player
+     */
+    public void displayRaidInfos(Player sender) {
+        int x = sender.getLocation().getBlockX();
+        int y = sender.getLocation().getBlockY();
+        int z = sender.getLocation().getBlockZ();
+        sender.playSound(sender.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH,5,2);
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a times 20 200 20");
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a subtitle [\"\",{\"text\":\"x\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ x +"\",\"color\":\"yellow\"},{\"text\":\" y\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ y +"\",\"color\":\"yellow\"},{\"text\":\" z\",\"color\":\"aqua\"},{\"text\":\": \"},{\"text\":\""+ z +"\",\"color\":\"yellow\"}]");
+        sender.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "title @a title [\"\",{\"text\":\"!! \",\"bold\":true,\"color\":\"green\"},{\"text\":\"New Raid \",\"bold\":true,\"color\":\"gold\"},{\"text\":\"!!\",\"bold\":true,\"color\":\"green\"}]");
+    }
+
+    public void createWorld(String instanceName, Player player){
+        if (Bukkit.getWorld(instanceName) == null ) {
+            WorldCreator worldcreator = new WorldCreator(instanceName);
+            worldcreator.type(WorldType.FLAT);
+            worldcreator.generateStructures(false);
+            worldcreator.createWorld();
+            player.teleport(Bukkit.getWorld(instanceName).getSpawnLocation());
+            Bukkit.getLogger().warning("A new instance have been created !");
+            Instance instance = new Instance(instanceName, Bukkit.getWorld(instanceName).getSpawnLocation(), 5, null);
+            Instance.flush(instance);
+        } else {
+            player.teleport(Bukkit.getWorld(instanceName).getSpawnLocation());
+            Instance instance = new Instance(instanceName, Bukkit.getWorld(instanceName).getSpawnLocation(), 5, null);
+            Instance.flush(instance);
+        }
+    }
 }
