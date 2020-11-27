@@ -183,18 +183,18 @@ public class GuildMCFunctions {
 
     /**
      * Display to player informations from his {@link Guild}
-     * @param player
+     * @param sender
      * {@link Player}
      */
     public void displayGuildInfo(Player sender){
         GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
         Guild guild = Guild.getGuildByName(gsender.getGuild());
 
-        String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC",
-                ChatColor.BLUE + "Name: " + ChatColor.YELLOW + guild.getName(),
-                ChatColor.BLUE + "Description: " + ChatColor.YELLOW + guild.getDescription(),
-                ChatColor.BLUE + "Level: " + ChatColor.YELLOW + guild.getLevel(),
-                ChatColor.BLUE + "Experience: " + ChatColor.YELLOW + guild.getExperience(),
+        String[] messages = {ChatColor.LIGHT_PURPLE + guild.getName(),
+                ChatColor.BLUE + "Name: " + ChatColor.WHITE + guild.getName(),
+                ChatColor.BLUE + "Description: " + ChatColor.WHITE + guild.getDescription(),
+                ChatColor.BLUE + "Level: " + ChatColor.WHITE + guild.getLevel(),
+                ChatColor.BLUE + "Experience: " + ChatColor.WHITE + guild.getExperience(),
                 ChatColor.BLUE + "Players: "};
         for(String i : messages){
             sender.sendMessage(i);
