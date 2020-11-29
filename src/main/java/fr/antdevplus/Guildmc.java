@@ -7,6 +7,8 @@ import fr.antdevplus.objects.guild.Guild;
 import fr.antdevplus.objects.guild.GuildPlayer;
 import fr.antdevplus.objects.guild.GuildRole;
 import fr.antdevplus.objects.instance.InstanceMob;
+import fr.antdevplus.objects.relation.Relation;
+import fr.antdevplus.objects.relation.Relations;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -151,7 +153,7 @@ public class Guildmc implements CommandExecutor {
                 } else {
                     sender.sendMessage("§6§l[§a§lGuildMC§6§l] §r§eGuildMC" + ChatColor.DARK_RED + "You don't have permission");
                 }
-            } else if (args[0].equalsIgnoreCase("info")){
+            } else if (args[0].equalsIgnoreCase("infos")){
                 GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
                 Guild guild = Guild.getGuildByName(gsender.getGuild());
 
@@ -173,6 +175,8 @@ public class Guildmc implements CommandExecutor {
                         sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
                     }
                 }
+                GuildGUI gui = new GuildGUI();
+                gui.openInventory(sender);
             } else if (args[0].equalsIgnoreCase("leveling")){
                 //functions.displayRaidInfos(sender);
                 RaidGUI raidGUI = new RaidGUI();
@@ -191,6 +195,10 @@ public class Guildmc implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("influence")){
                 GuildGUI gui = new GuildGUI();
                 gui.openInventory(sender);
+                Relations[] relations = Relations.values();
+                for ( Relations i : relations){
+                    sender.sendMessage(i.getColor() + i.toString());
+                }
             }
         } else {
             sender.sendMessage("§4 Use args: -wand");

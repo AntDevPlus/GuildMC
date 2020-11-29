@@ -58,11 +58,17 @@ public class GuildMCListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e)
     {
+        GuildMCFunctions functions = new GuildMCFunctions();
         Player player = (Player) e.getWhoClicked();
         if(player.getOpenInventory().getTitle() == "§6§l[§a§lGuildMC§6§l] §r§eGuild Master" || player.getOpenInventory().getTitle() == "§6§l[§a§lGuildMC§6§l] §r§eRaid GUI"){
             if(e.getCurrentItem().getType() == Material.NETHER_STAR){
-                GuildMCFunctions functions = new GuildMCFunctions();
                 functions.addPlayerToCreatorList(player);
+            }
+            e.setCancelled(true);
+        }
+        if ( player.getOpenInventory().getTitle() == "§f[§6Informations§f]") {
+            if (e.getCurrentItem().getType() == Material.PLAYER_HEAD){
+                functions.displayGuildInfo(player);
             }
             e.setCancelled(true);
         }

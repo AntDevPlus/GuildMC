@@ -7,7 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -65,5 +67,9 @@ public class GuildGUI implements InventoryHolder, Listener {
         inv.setItem(6,createGuiItem(Material.EXPERIENCE_BOTTLE, "§eExperience",guild.getExperience() + " exp"));
         inv.setItem(8,createGuiItem(Material.DARK_OAK_SIGN, "§6Influences", new Relation().Influence(guild) + " influence points"));
         ent.openInventory(inv);
+    }
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e){
+        e.getWhoClicked().sendMessage("gg");
     }
 }

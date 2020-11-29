@@ -7,6 +7,7 @@ fr\antdevplus\objects\instance\InstanceMob.class
 fr\antdevplus\objects\guild\Guild.class
 fr\antdevplus\gui\GuildGUI.class
 fr\antdevplus\objects\guild\GuildRole.class
+fr\antdevplus\objects\relation\Relations.class
 fr\antdevplus\Main.class
 fr\antdevplus\json\SerializationManager.class
 fr\antdevplus\utils\GuildMCFunctions.class
