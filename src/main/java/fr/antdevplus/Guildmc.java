@@ -155,28 +155,32 @@ public class Guildmc implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("infos")){
                 GuildPlayer gsender = GuildPlayer.getGuildPlayer(sender);
-                Guild guild = Guild.getGuildByName(gsender.getGuild());
+                if (gsender != null) {
+                    Guild guild = Guild.getGuildByName(gsender.getGuild());
 
-                String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC",
-                                        ChatColor.BLUE + "Name: " + ChatColor.YELLOW + guild.getName(),
-                                        ChatColor.BLUE + "Description: " + ChatColor.YELLOW + guild.getDescription(),
-                                        ChatColor.BLUE + "Level: " + ChatColor.YELLOW + guild.getLevel(),
-                                        ChatColor.BLUE + "Experience: " + ChatColor.YELLOW + guild.getExperience(),
-                                        ChatColor.BLUE + "Players: "};
-                for(String i : messages){
-                    sender.sendMessage(i);
-                }
-                Set<String> plist = guild.getPlayers();
-                for(String i : plist){
-                    Player inList = Bukkit.getPlayer(i);
-                    if ( inList != null && inList.isOnline()) {
-                        sender.sendMessage(ChatColor.WHITE + "  -> " + ChatColor.GREEN + i);
-                    } else {
-                        sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
+                    String[] messages = {"§6§l[§a§lGuildMC§6§l] §r§eGuildMC",
+                                            ChatColor.BLUE + "Name: " + ChatColor.YELLOW + guild.getName(),
+                                            ChatColor.BLUE + "Description: " + ChatColor.YELLOW + guild.getDescription(),
+                                            ChatColor.BLUE + "Level: " + ChatColor.YELLOW + guild.getLevel(),
+                                            ChatColor.BLUE + "Experience: " + ChatColor.YELLOW + guild.getExperience(),
+                                            ChatColor.BLUE + "Players: "};
+                    for(String i : messages){
+                        sender.sendMessage(i);
                     }
+                    Set<String> plist = guild.getPlayers();
+                    for(String i : plist){
+                        Player inList = Bukkit.getPlayer(i);
+                        if ( inList != null && inList.isOnline()) {
+                            sender.sendMessage(ChatColor.WHITE + "  -> " + ChatColor.GREEN + i);
+                        } else {
+                            sender.sendMessage(ChatColor.WHITE + "  -> " +ChatColor.RED + i);
+                        }
+                    }
+                    GuildGUI gui = new GuildGUI();
+                    gui.openInventory(sender);
+                } else {
+                    sender.sendMessage("You don't have guild !");
                 }
-                GuildGUI gui = new GuildGUI();
-                gui.openInventory(sender);
             } else if (args[0].equalsIgnoreCase("leveling")){
                 //functions.displayRaidInfos(sender);
                 RaidGUI raidGUI = new RaidGUI();
@@ -195,6 +199,7 @@ public class Guildmc implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("influence")){
                 GuildGUI gui = new GuildGUI();
                 gui.openInventory(sender);
+            } else if (args[0].equalsIgnoreCase("relation")){
                 Relations[] relations = Relations.values();
                 for ( Relations i : relations){
                     sender.sendMessage(i.getColor() + i.toString());

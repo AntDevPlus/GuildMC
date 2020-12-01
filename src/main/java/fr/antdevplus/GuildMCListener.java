@@ -9,6 +9,7 @@ import fr.antdevplus.utils.FileUtils;
 import fr.antdevplus.utils.GuildMCFunctions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
@@ -19,10 +20,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import scala.concurrent.impl.FutureConvertersImpl;
 
 import java.io.File;
 
@@ -84,17 +87,18 @@ public class GuildMCListener implements Listener {
         GuildMCFunctions functions = new GuildMCFunctions();
         if (p.hasPlayedBefore()){
             GuildPlayer gp = GuildPlayer.getGuildPlayer(p);
-            if(gp.getRole() != GuildRole.NONGUILDED) {
+            if (gp == null){
+                GuildPlayer newgplayer = new GuildPlayer(p.getName(),GuildRole.NONGUILDED,false, "default");
+                GuildPlayer.flush(newgplayer);
+            }
+            if(gp != null && gp.getRole() != GuildRole.NONGUILDED) {
                 functions.displayGuildInfo(p);
             } else {
                 p.sendMessage("§f[§aGuildMC§f] You don't have guild.");
             }
         } else {
             GuildPlayer newgplayer = new GuildPlayer(p.getName(),GuildRole.NONGUILDED,false, "default");
-            SerializationManager serializationManager = new SerializationManager();
-            String json = serializationManager.serializeGuildProfile(newgplayer);
-            File file = new File(Main.savePlayerDir, p.getName()+".json");
-            FileUtils.save(file,json);
+            GuildPlayer.flush(newgplayer);
         }
 
     }
@@ -150,6 +154,18 @@ public class GuildMCListener implements Listener {
             if(sign.getLine(0).equalsIgnoreCase(ChatColor.WHITE + "[" + ChatColor.GOLD + "RAID" + ChatColor.WHITE + "]"))
             {
                 player.sendMessage("gg");
+            }
+        }
+    }
+    @EventHandler
+    public void onKill(PlayerDeathEvent e)
+    {
+        Player killed = e.getEntity();
+        Entity killer = e.getEntity().getKiller();
+        if (killer instanceof Player && killer.getName() != killed.getName()) {
+            GuildPlayer gkiller = GuildPlayer.getGuildPlayer((Player) killer);
+            if (gkiller != null){
+                gkiller.addKill(killed.getName());
             }
         }
     }

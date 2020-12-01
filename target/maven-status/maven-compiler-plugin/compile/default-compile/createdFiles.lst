@@ -12,6 +12,7 @@ fr\antdevplus\Main.class
 fr\antdevplus\json\SerializationManager.class
 fr\antdevplus\utils\GuildMCFunctions.class
 fr\antdevplus\Guildmc.class
+fr\antdevplus\objects\relation\RelationEvent.class
 fr\antdevplus\gui\MasterGUI.class
 fr\antdevplus\objects\guild\GuildPlayer.class
 fr\antdevplus\objects\instance\Instance.class

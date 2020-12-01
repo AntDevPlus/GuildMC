@@ -3,9 +3,12 @@ package fr.antdevplus.objects.guild;
 import fr.antdevplus.Main;
 import fr.antdevplus.json.SerializationManager;
 import fr.antdevplus.utils.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: AntDev+
@@ -21,6 +24,7 @@ public class GuildPlayer {
         private GuildRole role;
         private Boolean isCreator;
         private String guildname;
+        private Set<String> PlayerKilled;
 
     /**
      * @param name
@@ -38,6 +42,7 @@ public class GuildPlayer {
         this.role = role;
         this.isCreator = isCreator;
         this.guildname = guildname;
+        this.PlayerKilled = new HashSet<>();
     }
 
     public String getGuild() {
@@ -62,6 +67,10 @@ public class GuildPlayer {
 
     public void setRole(GuildRole role) {
         this.role = role;
+    }
+
+    public void addKill(String name){
+        this.PlayerKilled.add(name);
     }
 
     public Boolean getCreator() {

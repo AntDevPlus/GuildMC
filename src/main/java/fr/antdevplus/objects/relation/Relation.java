@@ -14,11 +14,11 @@ public class Relation {
     private double experience;
     private int money, claimed_block, kills, members, allied_or_opponent_guilds;
     private String relation;
-    private HashMap<String, Integer> relationlog = new HashMap<String, Integer>();
+    private Set<String> log;
 
     public Relation(){}
-    public Relation(HashMap<String, Integer> relationlog) {
-        this.relationlog = relationlog;
+    public Relation(Set<String> log) {
+        this.log = log;
     }
 
     public double Influence(Guild guild) {

@@ -63,10 +63,12 @@ public class GuildGUI implements InventoryHolder, Listener {
         Player player = (Player) ent;
         GuildPlayer guildplayer = GuildPlayer.getGuildPlayer(player);
         Guild guild = Guild.getGuildByName(guildplayer.getGuild());
-        inv.setItem(0,createGuiItem(Material.NETHER_STAR, "§dInformations", "-> " + " §e"+guild.getName(), "-> " +" §e" + guild.getLevel() + " level(s)"));
-        inv.setItem(6,createGuiItem(Material.EXPERIENCE_BOTTLE, "§eExperience",guild.getExperience() + " exp"));
-        inv.setItem(8,createGuiItem(Material.DARK_OAK_SIGN, "§6Influences", new Relation().Influence(guild) + " influence points"));
-        ent.openInventory(inv);
+        if(guildplayer != null && guild != null || !guild.getName().equals("default")) {
+            inv.setItem(0, createGuiItem(Material.NETHER_STAR, "§dInformations", "-> " + " §e" + guild.getName(), "-> " + " §e" + guild.getLevel() + " level(s)"));
+            inv.setItem(6, createGuiItem(Material.EXPERIENCE_BOTTLE, "§eExperience", guild.getExperience() + " exp"));
+            inv.setItem(8, createGuiItem(Material.DARK_OAK_SIGN, "§6Influences", new Relation().Influence(guild) + " influence points"));
+            ent.openInventory(inv);
+        }
     }
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
